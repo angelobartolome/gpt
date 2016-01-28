@@ -747,6 +747,8 @@ ExprValue InterpreterEval::execBuiltInFunction(const string& fname, list<ExprVal
     return v;//empty value
   } else if(fname == "tamanho") {
     return executeTamanho(args);
+  } else if(fname == "caractereEm") {
+    return executeCaractereEm(args);
   } else {
     stringstream s;
     s << PACKAGE << ":BUG: No built-in function called \"" << fname << "\"" << endl;
@@ -825,6 +827,30 @@ void InterpreterEval::nextCmd(const string& file, int line) {
 #endif
 }
 
+ExprValue InterpreterEval::executeCaractereEm(list<ExprValue>& args) {
+  ExprValue ret;
+  ret.type = TIPO_CARACTERE;
+
+  if(args.size() > 2) {
+    stringstream s;
+    s << PACKAGE << ": Erro de execução próximo a linha " << currentLine <<  "\n" << "A função caractereEm necessita de 2 parametros." << "Abortando..." << endl;
+    GPTDisplay::self()->showError(s);
+    exit(1);
+  }
+
+  ExprValue f_a = args.front();
+  ExprValue l_a = args.back();
+
+  string str = f_a.value.c_str();
+  int index = (int) atoi(l_a.value.c_str());
+
+  stringstream s;
+  s << ((int) str[index]);
+  ret.setValue(s);
+
+  return ret;
+}
+
 //private
 ExprValue InterpreterEval::executeTamanho(list<ExprValue>& args) {
   ExprValue ret;
@@ -840,7 +866,7 @@ ExprValue InterpreterEval::executeTamanho(list<ExprValue>& args) {
           ret.setValue(tamanho_str);
         break;
       default:
-        cout << "erro";
+        cout << "(erro)";
         break;
     }
   }

@@ -31,6 +31,7 @@ SymbolTable::SymbolTable()
   registrarLeia();
   registrarImprima();
   registrarTamanho();
+  registrarCaractereEm();
 }
 
 SymbolTable::~SymbolTable()
@@ -40,6 +41,15 @@ SymbolTable::~SymbolTable()
 void SymbolTable::registrarTamanho()
 {
   Symbol f(SymbolTable::GlobalScope, "tamanho", 0, true, TIPO_INTEIRO);
+  f.cd = currentCod++;
+  f.param.setVariable(true);
+  f.isBuiltin = true;
+  insertSymbol(f, SymbolTable::GlobalScope);
+}
+
+void SymbolTable::registrarCaractereEm()
+{
+  Symbol f(SymbolTable::GlobalScope, "caractereEm", 0, true, TIPO_INTEIRO);
   f.cd = currentCod++;
   f.param.setVariable(true);
   f.isBuiltin = true;

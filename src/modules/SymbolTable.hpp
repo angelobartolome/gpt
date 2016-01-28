@@ -60,7 +60,7 @@ protected:
   void registrarLeia();
   void registrarImprima();
   void registrarTamanho();
-
+  void registrarCaractereEm();
   int currentCod;
   map<string,list<Symbol> > symbols;//map<scope, symbols>
 };

@@ -1,9 +1,10 @@
 algoritmo olamundo;
 
 variáveis
-  x: inteiro;
+  x: caractere;
 fim-variáveis
 
 início
-  imprima(tamanho(leia()));
+  x := caractereEm(leia(),leia(),leia());
+  imprima(x);
 fim

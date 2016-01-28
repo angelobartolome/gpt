@@ -25,6 +25,10 @@
   #include "InterpreterDBG.hpp"
 #endif
 #include "GPTDisplay.hpp"
+#include <cstring>
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 void ExprValue::setValue(string str) {
   value = str;
@@ -715,7 +719,7 @@ void InterpreterEval::beginFunctionCall(const string& file, const string& funcna
     ++ait;
     ++pit;
   }
-  
+
   context_t ctx = context_t(funcname, line);
   stack_entry_t entry = stack_entry_t(file, ctx);
   program_stack.push_back(entry);
@@ -741,6 +745,8 @@ ExprValue InterpreterEval::execBuiltInFunction(const string& fname, list<ExprVal
   } else if(fname == "imprima") {
     executeImprima(args);
     return v;//empty value
+  } else if(fname == "tamanho") {
+    return executeTamanho(args);
   } else {
     stringstream s;
     s << PACKAGE << ":BUG: No built-in function called \"" << fname << "\"" << endl;
@@ -755,7 +761,7 @@ void InterpreterEval::setReturnExprValue(ExprValue& v) {
 
 ExprValue InterpreterEval::getReturnExprValue(const string& fname) {
   Symbol func = stable.getSymbol(SymbolTable::GlobalScope, fname);
-  
+
   if((func.type.primitiveType() != TIPO_REAL) && (retExpr.type == TIPO_REAL)) {
     //trunca o valor inteiro
     stringstream s;
@@ -820,6 +826,26 @@ void InterpreterEval::nextCmd(const string& file, int line) {
 }
 
 //private
+ExprValue InterpreterEval::executeTamanho(list<ExprValue>& args) {
+  ExprValue ret;
+  ret.type = TIPO_INTEIRO;
+  int tamanho;
+  char tamanho_str[10];
+
+  for(list<ExprValue>::iterator it = args.begin(); it != args.end(); ++it) {
+    ExprValue ss = (*it);
+    switch((*it).type) {
+      case TIPO_LITERAL:
+          sprintf(tamanho_str, "%d", strlen((*it).value.c_str()));
+          ret.setValue(tamanho_str);
+        break;
+      default:
+        cout << "erro";
+        break;
+    }
+  }
+  return ret;
+}
 
 ExprValue InterpreterEval::executeLeia() {
   ExprValue ret;
@@ -841,7 +867,7 @@ void InterpreterEval::executeImprima(list<ExprValue>& args) {
       case TIPO_INTEIRO:
         cout << (int) atoi((*it).value.c_str());
         break;
-      case TIPO_REAL:        
+      case TIPO_REAL:
         cout << (float) atof((*it).value.c_str());
         break;
       case TIPO_CARACTERE:
@@ -855,7 +881,7 @@ void InterpreterEval::executeImprima(list<ExprValue>& args) {
         }
         break;
       case TIPO_LITERAL:
-      	if(!(*it).value.empty()) {	
+      	if(!(*it).value.empty()) {
           cout << (*it).value.c_str();
         } else {
           cout << "(nulo)";

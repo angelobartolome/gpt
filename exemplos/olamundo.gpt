@@ -1,5 +1,9 @@
 algoritmo olamundo;
 
+variáveis
+  x: inteiro;
+fim-variáveis
+
 início
-  imprima("Olá Mundo!");
+  imprima(tamanho(leia()));
 fim

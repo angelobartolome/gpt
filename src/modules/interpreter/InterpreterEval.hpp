@@ -111,9 +111,9 @@ class InterpreterEval {
   public:
 
   InterpreterEval(SymbolTable& st, string host, int port);
-  
+
   void init(const string&);
- 
+
   ExprValue evaluateOu(ExprValue& left, ExprValue& right);
   ExprValue evaluateE(ExprValue& left, ExprValue& right);
   ExprValue evaluateBitOu(ExprValue& left, ExprValue& right);
@@ -129,7 +129,7 @@ class InterpreterEval {
   ExprValue evaluateMenos(ExprValue& left, ExprValue& right);
   ExprValue evaluateDiv(ExprValue& left, ExprValue& right);
   ExprValue evaluateMultip(ExprValue& left, ExprValue& right);
-  ExprValue evaluateMod(ExprValue& left, ExprValue& right); 
+  ExprValue evaluateMod(ExprValue& left, ExprValue& right);
   ExprValue evaluateUnNeg(ExprValue& v);
   ExprValue evaluateUnPos(ExprValue& v);
   ExprValue evaluateUnNot(ExprValue& v);
@@ -141,31 +141,32 @@ class InterpreterEval {
   bool execLowerEq(LValue& lv, ExprValue& ate);
   bool execBiggerEq(LValue& lv, ExprValue& ate);
 
-  void execAttribution(LValue& lvalue, ExprValue& v);  
+  void execAttribution(LValue& lvalue, ExprValue& v);
 
   void beginFunctionCall(const string& file, const string& fname, list<ExprValue>& args, int line);
   void endFunctionCall();
 
   bool isBuiltInFunction(const string& fname);
   ExprValue execBuiltInFunction(const string& fname, list<ExprValue>& args);
- 
+
   void setReturnExprValue(ExprValue& v);
   ExprValue getReturnExprValue(const string&);
-  
+
   int getReturning();
-  
+
 //----------- Debugger -------------------------
 
   void nextCmd(const string& file, int line);
-  
+
 private:
   string castLeiaChar(Variable& var, ExprValue& v);
 
   ExprValue executeLeia();
+  ExprValue executeTamanho(list<ExprValue>& args);
 
   void executeImprima(list<ExprValue>& args);
 
-  
+
   SymbolTable& stable;
   string dbg_host;
   int dbg_port;
@@ -176,7 +177,7 @@ private:
 
   stack<bool> skipStack;
 
-  Variables variables;  
+  Variables variables;
   typedef pair<string, int> context_t;
   typedef pair<string, pair<string, int> > stack_entry_t; //pair<file, pair<context, line> >
   list< stack_entry_t > program_stack;

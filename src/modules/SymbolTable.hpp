@@ -34,7 +34,7 @@ public:
   SymbolTableException(const string& msg_) : msg(msg_) {}
 
   const string& getMessage() { return msg;}
-  
+
   string msg;
 };
 
@@ -59,6 +59,7 @@ public:
 protected:
   void registrarLeia();
   void registrarImprima();
+  void registrarTamanho();
 
   int currentCod;
   map<string,list<Symbol> > symbols;//map<scope, symbols>

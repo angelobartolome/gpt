@@ -30,10 +30,20 @@ SymbolTable::SymbolTable()
   //builtin functions
   registrarLeia();
   registrarImprima();
+  registrarTamanho();
 }
 
 SymbolTable::~SymbolTable()
 {
+}
+
+void SymbolTable::registrarTamanho()
+{
+  Symbol f(SymbolTable::GlobalScope, "tamanho", 0, true, TIPO_INTEIRO);
+  f.cd = currentCod++;
+  f.param.setVariable(true);
+  f.isBuiltin = true;
+  insertSymbol(f, SymbolTable::GlobalScope);
 }
 
 void SymbolTable::registrarLeia() {
@@ -48,7 +58,7 @@ void SymbolTable::registrarImprima() {
   f.cd = currentCod++;
   f.param.setVariable(true);
   f.isBuiltin = true;
-  insertSymbol(f, SymbolTable::GlobalScope);  
+  insertSymbol(f, SymbolTable::GlobalScope);
 }
 
 void SymbolTable::declareVar(const string& scope, const string& lexeme, int line, int type) {
@@ -62,7 +72,7 @@ void SymbolTable::declareVar(const string& scope, const string& lexeme, int line
 
   Symbol s(scope, lexeme, line, false, type, dimensions);
   s.cd = currentCod++;
-  symbols[scope].push_back(s);  
+  symbols[scope].push_back(s);
 }
 
 

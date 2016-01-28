@@ -37,7 +37,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
-
+#include <unistd.h>
 GPT* GPT::_self = 0;
 
 GPT::GPT()
@@ -65,7 +65,7 @@ void GPT::printParseTree(bool value)
   _printParseTree = value;
 }
 
-// void GPT::usePipe(bool value) 
+// void GPT::usePipe(bool value)
 // {
 //   _usePipe = value;
 // }
@@ -124,7 +124,7 @@ bool GPT::prologue(const list<string>& ifnames) {
 //       GPTDisplay::self()->showError(s);
 //       goto bail;
 //     }
-// 
+//
 //     if(!parse(cin)) {
 //       goto bail;
 //     }
@@ -144,14 +144,14 @@ bool GPT::prologue(const list<string>& ifnames) {
   if(!parse(istream_list)) {
     goto bail;
   }
-    
+
   success = true;
 
   bail:
     return success;
 }
 
-bool GPT::compile(const list<string>& ifnames, bool genBinary){  
+bool GPT::compile(const list<string>& ifnames, bool genBinary){
   bool success = false;
   stringstream s;
 
@@ -163,11 +163,11 @@ bool GPT::compile(const list<string>& ifnames, bool genBinary){
   if(!_useOutputFile) {
     if(!genBinary) {
       ofname += ".asm";
-    } 
+    }
     #ifdef WIN32
     else
-    {      
-      ofname += ".exe";      
+    {
+      ofname += ".exe";
     }
     #endif
   }
@@ -213,7 +213,7 @@ bool GPT::compile(const list<string>& ifnames, bool genBinary){
         system(cmd.str().c_str());
       #endif
     }
-  
+
     success = true;
 
     bail:
@@ -279,10 +279,10 @@ int GPT::interpret(const list<string>& ifnames, const string& host, int port) {
 
 bool GPT::parse(list<pair<string,istream*> >& istream_list) {
   stringstream s;
-  
+
   try {
     TokenStreamSelector*  selector = new TokenStreamSelector;
-    
+
     //codigo desgracado, mas faz o que deve
     //1: controle de multiplos tokenStreams
     //2: utilizar o filename adequado para error reporting
@@ -292,18 +292,18 @@ bool GPT::parse(list<pair<string,istream*> >& istream_list) {
     PortugolLexer* fst = 0;
     string firstFile;
     int c = 0;
-    for(list<pair<string,istream*> >::reverse_iterator it = istream_list.rbegin(); 
-           it != istream_list.rend(); 
-           ++it, ++c) 
+    for(list<pair<string,istream*> >::reverse_iterator it = istream_list.rbegin();
+           it != istream_list.rend();
+           ++it, ++c)
     {
       lexer = new PortugolLexer(*((*it).second), selector);
-      
+
       selector->addInputStream(lexer, (*it).first);
       selector->select(lexer);
       selector->push((*it).first);
       if(!firstFile.empty()) {
         lexer->setNextFilename(firstFile);
-      } 
+      }
 
       prev = lexer;
       GPTDisplay::self()->addFileName((*it).first);
@@ -313,11 +313,11 @@ bool GPT::parse(list<pair<string,istream*> >& istream_list) {
     }
 
     selector->select(fst);
-    
+
     PortugolParser parser(*selector);
 
     GPTDisplay::self()->setCurrentFile(firstFile);
-    
+
     ASTFactory ast_factory(PortugolAST::TYPE_NAME,&PortugolAST::factory);
     parser.initializeASTFactory(ast_factory);
     parser.setASTFactory(&ast_factory);

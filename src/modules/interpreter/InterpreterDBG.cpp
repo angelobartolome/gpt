@@ -441,7 +441,7 @@ bool InterpreterDBG::breakOn(const string& file, int line) {
 void InterpreterDBG::closeSock() {
 #ifndef WIN32
   shutdown(clientsock, SHUT_RDWR);
-  close(clientsock);
+  //close(clientsock);
   clientsock = -1;
 #else
   closesocket(clientsock);

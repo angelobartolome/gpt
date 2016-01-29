@@ -830,7 +830,8 @@ void InterpreterEval::nextCmd(const string& file, int line) {
   }
 #endif
 }
-void InterpreterEval::executeVal(list<ExprValue>& args) {
+
+ExprValue InterpreterEval::executeVal(list<ExprValue>& args) {
   ExprValue f_a = args.front();
 
   ExprValue ret;

@@ -752,6 +752,8 @@ ExprValue InterpreterEval::execBuiltInFunction(const string& fname, list<ExprVal
   } else if(fname == "substring") {
     return executeSubstring(args);
   } else {
+    return executeVal(args);  
+  } else {
     stringstream s;
     s << PACKAGE << ":BUG: No built-in function called \"" << fname << "\"" << endl;
     GPTDisplay::self()->showError(s);
@@ -828,6 +830,21 @@ void InterpreterEval::nextCmd(const string& file, int line) {
   }
 #endif
 }
+void InterpreterEval::executeVal(list<ExprValue>& args) {
+  ExprValue f_a = args.front();
+
+  ExprValue ret;
+  ret.type = TIPO_LITERAL;
+  stringstream s;
+  s << f_a.value.c_str();
+  ret.setValue(s);
+  return ret;
+}
+
+
+
+
+
 ExprValue InterpreterEval::executeSubstring(list<ExprValue>& args) {
   ExprValue ret;
   ret.type = TIPO_LITERAL;

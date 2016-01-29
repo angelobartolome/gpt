@@ -751,8 +751,8 @@ ExprValue InterpreterEval::execBuiltInFunction(const string& fname, list<ExprVal
     return executeCaractereEm(args);
   } else if(fname == "substring") {
     return executeSubstring(args);
-  } else {
-    return executeVal(args);  
+  } else if(fname == "val") {
+    return executeVal(args);
   } else {
     stringstream s;
     s << PACKAGE << ":BUG: No built-in function called \"" << fname << "\"" << endl;

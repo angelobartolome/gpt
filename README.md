@@ -1,9 +1,10 @@
 gpt
 ===
 
-G-Portugol - compilador e interpretador - Fork do SourceForge - http://gpt.berlios.de/site/
+G-Portugol - compilador e interpretador - Fork do Fork do SourceForge - http://gpt.berlios.de/site/
 
-Autor do Fork: Rafael Goulart <rafaelgou@gmail.com>
+Autor do Fork(2015): Angelo Bartolome <angelo.m.bartolome@gmail.com>
+Autor do Fork(2006): Rafael Goulart <rafaelgou@gmail.com>
 
 
 G-Portugol - versão: 1.1

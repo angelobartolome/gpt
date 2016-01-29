@@ -749,6 +749,8 @@ ExprValue InterpreterEval::execBuiltInFunction(const string& fname, list<ExprVal
     return executeTamanho(args);
   } else if(fname == "caractereEm") {
     return executeCaractereEm(args);
+  } else if(fname == "substring") {
+    return executeSubstring(args);
   } else {
     stringstream s;
     s << PACKAGE << ":BUG: No built-in function called \"" << fname << "\"" << endl;
@@ -825,6 +827,48 @@ void InterpreterEval::nextCmd(const string& file, int line) {
     }
   }
 #endif
+}
+ExprValue InterpreterEval::executeSubstring(list<ExprValue>& args) {
+  ExprValue ret;
+  ret.type = TIPO_LITERAL;
+
+  if(args.size() != 3) {
+    stringstream s;
+    s << PACKAGE << ": Erro de execução próximo a linha " << currentLine <<  "\n" << "A função substring necessita de 3 parametros." << "Abortando..." << endl;
+    GPTDisplay::self()->showError(s);
+    exit(1);
+  }
+  int argc = 0;
+
+  int startIndex = 0;
+  int cnt = 0;
+
+  stringstream str;
+
+  for(list<ExprValue>::iterator it = args.begin(); it != args.end(); ++it) {
+    ExprValue ss = (*it);
+    argc++;
+    switch((*it).type) {
+      case TIPO_INTEIRO:
+        if(argc == 2)
+          startIndex = (int) atoi((*it).value.c_str());
+        else if(argc == 3)
+          cnt = (int) atoi((*it).value.c_str());
+        break;
+        break;
+      case TIPO_LITERAL:
+        if(!(*it).value.empty() && argc == 1) {
+          str << (*it).value.c_str();
+        }
+        break;
+    }
+  }
+
+  stringstream c;
+  c << str.str().substr(startIndex, cnt);
+  ret.setValue(c);
+
+  return ret;
 }
 
 ExprValue InterpreterEval::executeCaractereEm(list<ExprValue>& args) {

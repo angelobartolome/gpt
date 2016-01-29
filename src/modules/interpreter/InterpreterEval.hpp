@@ -164,7 +164,8 @@ private:
   ExprValue executeLeia();
   ExprValue executeTamanho(list<ExprValue>& args);
   ExprValue executeCaractereEm(list<ExprValue>& args);
-
+  ExprValue executeSubstring(list<ExprValue>& args);
+  
   void executeImprima(list<ExprValue>& args);
 
 

@@ -1,10 +1,18 @@
 algoritmo olamundo;
 
 variáveis
+  str1: literal;
+  str2: literal;
   x: caractere;
 fim-variáveis
 
 início
-  x := caractereEm(leia(),leia(),leia());
+  str1 := leia();
+  str2 := substring(str1,0,4);
+  x := caractereEm(str1, 5);
+
+
+  imprima(str1);
+  imprima(str2);
   imprima(x);
 fim

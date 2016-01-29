@@ -61,6 +61,7 @@ protected:
   void registrarImprima();
   void registrarTamanho();
   void registrarCaractereEm();
+  void registrarSubstring();
   int currentCod;
   map<string,list<Symbol> > symbols;//map<scope, symbols>
 };

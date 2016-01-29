@@ -32,6 +32,7 @@ SymbolTable::SymbolTable()
   registrarImprima();
   registrarTamanho();
   registrarCaractereEm();
+  registrarSubstring();
 }
 
 SymbolTable::~SymbolTable()
@@ -46,10 +47,18 @@ void SymbolTable::registrarTamanho()
   f.isBuiltin = true;
   insertSymbol(f, SymbolTable::GlobalScope);
 }
+void SymbolTable::registrarSubstring()
+{
+  Symbol f(SymbolTable::GlobalScope, "substring", 0, true, TIPO_LITERAL);
+  f.cd = currentCod++;
+  f.param.setVariable(true);
+  f.isBuiltin = true;
+  insertSymbol(f, SymbolTable::GlobalScope);
+}
 
 void SymbolTable::registrarCaractereEm()
 {
-  Symbol f(SymbolTable::GlobalScope, "caractereEm", 0, true, TIPO_INTEIRO);
+  Symbol f(SymbolTable::GlobalScope, "caractereEm", 0, true, TIPO_CARACTERE);
   f.cd = currentCod++;
   f.param.setVariable(true);
   f.isBuiltin = true;
